@@ -3,6 +3,7 @@ package com.ihs.demo.message_2013011371;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -38,7 +39,12 @@ public class ContactsFragment extends Fragment implements INotificationObserver 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String mid = contacts.get(position).getMid();
                 String name = contacts.get(position).getName();
-                Toast.makeText(getActivity(), "你点击了名字为：" + name + " mid为：" + mid + "的联系人，需要在这里跳转到同此人的聊天界面（一个Activity）", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), "你点击了名字为：" + name + " mid为：" + mid + "的联系人，需要在这里跳转到同此人的聊天界面（一个Activity）", Toast.LENGTH_LONG).show();
+                
+                Intent intent = new Intent(getActivity(), ChatActivity.class);
+                intent.putExtra("mid", mid);
+                intent.putExtra("name", name);
+                startActivity(intent);
             }
 
         });

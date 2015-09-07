@@ -38,5 +38,7 @@
     <string name="refreshListView_doing_head_refresh">正在刷新&#8230;</string>
     <string name="refreshListView_head_load_more">加载更多&#8230;</string>
     <string name="refreshListView_refresh_lastTime">最近更新&#160;&#058;&#160;</string>
+    <string name="sendHint">Type your message here</string>
+    <string name="title_activity_show_pic">ShowPicActivity</string>
 
 </resources>

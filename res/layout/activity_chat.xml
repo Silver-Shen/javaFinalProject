@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:id="@+id/chat_view">
+    <include layout="@layout/title"/>
+    <com.ihs.demo.message_2013011371.RefreshListView
+       android:id="@+id/msg_list_view"
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="1"
+       android:divider="#0000">        
+    </com.ihs.demo.message_2013011371.RefreshListView>
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content">
+
+	    <Button
+	        android:id="@+id/choose_media"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:background="@drawable/chat_show_multimedia_bt" />
+
+	    <EditText 
+	        android:id="@+id/input_text"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:hint="Typing here"
+	        android:singleLine="true"/>
+	    	<Button 
+	    	    android:id="@+id/send"
+	    	    android:layout_width="wrap_content"
+	    	    android:layout_height="wrap_content"
+	    	    android:background="@drawable/chat_text_message_send_bt"/>
+	</LinearLayout>
+	<TableLayout 
+	    android:id="@+id/media_holder"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:visibility="gone">
+	    <TableRow >
+	        <ImageButton 
+	            android:id="@+id/choose_pic"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/monkey_android_multimedia_photo_bt"/>
+	        <ImageButton 
+	            android:id="@+id/choose_audio"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/monkey_android_multimedia_audio_bt"/>
+	        <ImageButton 
+	            android:id="@+id/take_pic"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/monkey_android_multimedia_camera_bt"/>	
+	        <ImageButton 
+	            android:id="@+id/send_loc"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:src="@drawable/location_marker"/>	        
+	    </TableRow>
+	</TableLayout>
+	<ImageButton 
+	    android:id="@+id/voice_button"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/chat_audio_message_hold_to_talk"
+	    android:visibility="gone"/>
+	    
+</LinearLayout>

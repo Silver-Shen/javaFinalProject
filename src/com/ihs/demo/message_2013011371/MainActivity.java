@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBar.TabListener;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import com.ihs.commons.utils.HSLog;
 import com.ihs.message_2013011371.R;
@@ -23,7 +24,9 @@ public class MainActivity extends HSActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //hide the main title
+        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+        
         ActionBar bar = this.getSupportActionBar();
         bar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         int[] tabNames = { R.string.contacts, R.string.messages, R.string.settings, R.string.sample };

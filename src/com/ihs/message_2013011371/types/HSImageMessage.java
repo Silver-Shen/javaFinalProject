@@ -23,11 +23,11 @@ import com.ihs.commons.utils.HSLog;
 import com.ihs.message_2013011371.managers.DownloadManager;
 import com.ihs.message_2013011371.managers.DownloadManager.DownloadOperationType;
 import com.ihs.message_2013011371.utils.ImageUtils;
-import com.ihs.message_2013011371.utils.Utils;
 import com.ihs.message_2013011371.utils.ImageUtils.ImageClass;
 import com.ihs.message_2013011371.utils.ImageUtils.ImageCompressionSetting;
 import com.ihs.message_2013011371.utils.ImageUtils.ImageSizeClass;
 import com.ihs.message_2013011371.utils.ImageUtils.Size;
+import com.ihs.message_2013011371.utils.Utils;
 
 /**
  * 图片消息类
@@ -468,16 +468,26 @@ public class HSImageMessage extends HSBaseMessage implements IMediaProtocol {
     @Override
     public void initMessageSpecialProperties() {
         JSONObject ct = getContent();
-        JSONObject ex = getExtra();
-        try {
-            JSONObject thumbnailInfo = ct.getJSONObject(Constants.THUMBNAIL);
-            JSONObject normalImageInfo = ct.getJSONObject(Constants.NORMAL);
-            JSONObject originalImageInfo = ct.getJSONObject(Constants.ORIGIN);
+        JSONObject thumbnailInfo = ct.optJSONObject(Constants.THUMBNAIL);
+        JSONObject normalImageInfo = ct.optJSONObject(Constants.NORMAL);
+        JSONObject originalImageInfo = ct.optJSONObject(Constants.ORIGIN);
+        if (thumbnailInfo != null) {
             this.thumbnailSize = new Size(thumbnailInfo.optInt(Constants.WIDTH), thumbnailInfo.optInt(Constants.HEIGHT));
+        }
+        else {
+            this.thumbnailSize = new Size(0, 0);
+        }
+        if (normalImageInfo != null) {
             this.normalImageSize = new Size(normalImageInfo.optInt(Constants.WIDTH), normalImageInfo.optInt(Constants.HEIGHT));
+        }
+        else {
+            this.normalImageSize = new Size(0, 0);
+        }
+        if (originalImageInfo != null) {
             this.originalImageSize = new Size(originalImageInfo.optInt(Constants.WIDTH), originalImageInfo.optInt(Constants.HEIGHT));
-        } catch (JSONException e) {
-            e.printStackTrace();
+        }
+        else {
+            this.originalImageSize = new Size(0, 0);
         }
         if (getThumbnailMediaStatus() == HSMessageMediaStatus.DOWNLOADED) {
             setDownloadProgress(1);
@@ -490,10 +500,12 @@ public class HSImageMessage extends HSBaseMessage implements IMediaProtocol {
 
     public HSImageMessage(JSONObject info) {
         super(info);
+        initMessageSpecialProperties();
     }
 
     public HSImageMessage(Cursor cursor) {
         super(cursor);
+        initMessageSpecialProperties();
     }
 
     @Override
