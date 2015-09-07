@@ -488,5 +488,11 @@ public class ChatActivity extends HSActivity implements HSMessageChangeListener{
     		e.printStackTrace();
     	}
     }
+    
+    @Override
+    public void onDestroy(){
+    	super.onDestroy();
+    	HSMessageManager.getInstance().removeListener(this);
+    }
 }
 
