@@ -15,7 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
-
+//显示大图的事件，只有一个imageView，全屏显示传进来的图片
 public class ShowPicActivity extends HSActivity {
 
 	@Override

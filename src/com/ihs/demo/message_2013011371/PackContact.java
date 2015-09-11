@@ -1,5 +1,5 @@
 package com.ihs.demo.message_2013011371;
-
+//格式化的联系人，在自带的Contact上增加了一些字段，并提供的排序的功能(comparable)
 public class PackContact implements Comparable<PackContact>{
 	private String name;
 	private String mid;

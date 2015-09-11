@@ -42,12 +42,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-
+//会话列表碎片的布局和事件处理
 public class MessagesFragment extends Fragment implements HSMessageChangeListener{
-	private MessageAdapter adapter = null;
+	private MessageAdapter adapter = null; //适配器，本文件中作为内部类实现
 	private ListView listView;
 	private int operatingPosition;
-	final List<PackContact> contacts = new ArrayList<PackContact>();
+	final List<PackContact> contacts = new ArrayList<PackContact>(); //规格化联系人的数据
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,9 +58,12 @@ public class MessagesFragment extends Fragment implements HSMessageChangeListene
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_messages, container, false);
 		listView = (ListView)view.findViewById(R.id.fragmsg_listview);
+		//为listview设置适配器
 		adapter = new MessageAdapter(this.getActivity(), R.layout.contact_item, contacts);
 		listView.setAdapter(adapter);
+		//进入会话列表界面时清空通知中心
 		DemoApplication.notificationManager.cancelAll();
+		//设置表项长按事件，可以选择删除整个联系人或者标记为已读
 		listView.setOnItemLongClickListener(new OnItemLongClickListener(){
 
 			@Override
@@ -80,7 +83,7 @@ public class MessagesFragment extends Fragment implements HSMessageChangeListene
 			}
 
 		});
-
+		//设置表项点击事件，进入对应的会话界面
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -143,6 +146,7 @@ public class MessagesFragment extends Fragment implements HSMessageChangeListene
 		adapter.notifyDataSetChanged();
 		listView.setSelection(0);
 	}
+	//listview的适配器，这里作为内部类
 	public class MessageAdapter extends ArrayAdapter<PackContact> {
 		private int sourceId;
 		private Context myContext;
@@ -162,13 +166,17 @@ public class MessagesFragment extends Fragment implements HSMessageChangeListene
 			PackContact contact = getItem(position);
 			ViewHolder viewHolder;
 			if (convertView == null){
-				//原先是getContext()
 				view = LayoutInflater.from(myContext).inflate(sourceId, null);
 				viewHolder = new ViewHolder();
+				//用户头像
 				viewHolder.userHead = (ImageView)view.findViewById(R.id.user_head);
+				//用户姓名
 				viewHolder.nameView = (TextView)view.findViewById(R.id.contact_name);
+				//最近聊天内容
 				viewHolder.recentView = (TextView)view.findViewById(R.id.recent_msg);
+				//最近聊天事件
 				viewHolder.timeView = (TextView)view.findViewById(R.id.contact_time);
+				//未读数量
 				viewHolder.unreadView = (TextView)view.findViewById(R.id.unread_num);
 				view.setTag(viewHolder);
 			}else{
@@ -204,6 +212,7 @@ public class MessagesFragment extends Fragment implements HSMessageChangeListene
 			TextView unreadView;
 		}
 	}
+	//如果收到新消息，刷新联系人列表
 	@Override
 	public void onMessageChanged(HSMessageChangeType changeType, List<HSBaseMessage> messages) {
 		// TODO Auto-generated method stub

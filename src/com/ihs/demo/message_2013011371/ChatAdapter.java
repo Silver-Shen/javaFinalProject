@@ -25,6 +25,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+//聊天界面ListView的适配器类
 public class ChatAdapter extends ArrayAdapter<HSBaseMessage> {
 	private int sourceId;
 	private String myId = HSAccountManager.getInstance().getMainAccount().getMID();
@@ -38,7 +39,7 @@ public class ChatAdapter extends ArrayAdapter<HSBaseMessage> {
 		HSBaseMessage msg = getItem(position);
 		View view;
 		ViewHolder viewHolder;
-		if (convertView == null){
+		if (convertView == null){//如果没有存在的视图就inflate
 			view = LayoutInflater.from(getContext()).inflate(sourceId, null);
 			viewHolder = new ViewHolder();
 			viewHolder.leftLayout = (LinearLayout) view.findViewById(R.id.left_layout);
@@ -55,14 +56,17 @@ public class ChatAdapter extends ArrayAdapter<HSBaseMessage> {
 			view = convertView;
 			viewHolder = (ViewHolder) view.getTag();
 		}
+		//格式化发送时间并设置到textview中
 		viewHolder.sendTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm").format(msg.getTimestamp()));
 		boolean isMy;
+		//由于在一个layout里同时放置了我方和对方的消息框，故每次需要判断
+		//消息的发送方，来隐藏掉另一半的消息框
 		if (!msg.getFrom().equals(myId)){
 			viewHolder.leftLayout.setVisibility(View.VISIBLE);
 			viewHolder.rightLayout.setVisibility(View.GONE);
 			isMy = false;
 		}
-		else {
+		else {//设置消息发送状态，如果正在发送，就显示进度条，否则显示状态图片
 			viewHolder.leftLayout.setVisibility(View.GONE);
 			viewHolder.rightLayout.setVisibility(View.VISIBLE);
 			if (msg.getStatus() == HSMessageStatus.SENDING){
@@ -81,6 +85,7 @@ public class ChatAdapter extends ArrayAdapter<HSBaseMessage> {
 			}
 			isMy = true;
 		}
+		//根据不同的消息类型改变layout各个部分的可见性
 		switch (msg.getType()){
 		case TEXT:
 			if (!isMy){

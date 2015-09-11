@@ -30,7 +30,9 @@
 	        android:layout_gravity="bottom"
 	        android:gravity="center"
 	        android:textColor="@color/black"
-	        android:text="recent_msg"/>
+	        android:text="recent_msg"
+	        android:singleLine="true"
+	        android:ellipsize="end"/>
     </LinearLayout>
 	<RelativeLayout 
     	android:layout_width="wrap_content"

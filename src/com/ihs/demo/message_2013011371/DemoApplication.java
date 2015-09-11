@@ -229,6 +229,7 @@ public class DemoApplication extends HSApplication implements HSMessageChangeLis
         		if (msg == null) continue;
         		String charId = msg.getChatterMid(); 
         		if (FriendManager.getInstance().getFriend(charId) == null) continue;
+        		//根据消息的发送方，确定需要播放哪一种通知音效
         		if (charId.equals(msg.getFrom())){
         			initMediaPlayer(1);
         			mediaPlayer.start();
@@ -237,7 +238,9 @@ public class DemoApplication extends HSApplication implements HSMessageChangeLis
         			initMediaPlayer(0);
         			mediaPlayer.start();
         		}
+        		//收到新消息后更新数据库
         		refreshDataBase(SQL_UPDATE, charId, msg);
+        		//如果程序在后台，就在通知中心播放通知
         		if (HSSessionMgr.getTopActivity() == null && charId.equals(msg.getFrom())) refreshNotification(NOTI_UPDATE, charId);
         	}
         }
@@ -344,7 +347,7 @@ public class DemoApplication extends HSApplication implements HSMessageChangeLis
     		e.printStackTrace();
     	}
     }
-    
+    //将通知提示音从raw中拷贝至缓存文件夹，以便获取绝对路径播放
     static void copy() {
     	final File receivedAudioFile = new File(HSApplication.getContext().getCacheDir() + "/" + "received.wav");
     	final File sentAudioFile = new File(HSApplication.getContext().getCacheDir() + "/" + "sent.wav");

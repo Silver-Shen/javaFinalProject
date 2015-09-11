@@ -143,7 +143,6 @@ public class ChatActivity extends HSActivity implements HSMessageChangeListener{
 		setReaded();
 		//清空通知
 		DemoApplication.notificationManager.cancelAll();
-
 		//设置刷新列表监听事件
 		msgListView.setOnRefreshListener(new OnRefreshListener(){
 
@@ -346,7 +345,7 @@ public class ChatActivity extends HSActivity implements HSMessageChangeListener{
 		mRecorder = null;
 		Toast.makeText(getApplicationContext(), "保存录音" + audioPath, 0).show();
 	}
-	
+	//弹出菜单的事件函数，删除当前选中的条目
 	public boolean onContextItemSelected(MenuItem item){
     	HSBaseMessage msg = msgList.get(operatingPosition);
     	if (item.getItemId() == 0){
@@ -369,7 +368,7 @@ public class ChatActivity extends HSActivity implements HSMessageChangeListener{
     	}
     	return false;
     }
-	
+	//启动新事件的结果回调函数，其中照相和选择图片需要回调
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
@@ -398,7 +397,7 @@ public class ChatActivity extends HSActivity implements HSMessageChangeListener{
 		}
 	}
 
-
+	//消息监听的重写函数
 	@Override
 	public void onMessageChanged(HSMessageChangeType changeType, List<HSBaseMessage> messages) {
 		// TODO Auto-generated method stub
@@ -488,7 +487,7 @@ public class ChatActivity extends HSActivity implements HSMessageChangeListener{
     		e.printStackTrace();
     	}
     }
-    
+    //在退出时注销监听
     @Override
     public void onDestroy(){
     	super.onDestroy();
